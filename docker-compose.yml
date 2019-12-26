@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+  # app
+  kv_store:
+    build: .
+    # command: uvicorn main:app --host 0.0.0.0 --port 5000 --reload
+    command: python app.py
+    volumes:
+      - ./:/kv-store
+    ports:
+      - "5000:5000"
+    depends_on:
+        - mongo
+
+  # MongoDB as a service
+  mongo:
+    image: mongo
+    container_name: cont_mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "root"
+      MONGO_INITDB_ROOT_PASSWORD: "secretPassword"
+    volumes:
+        - ./mongo_data:/data/db
+    ports:
+      - "27017:27017"

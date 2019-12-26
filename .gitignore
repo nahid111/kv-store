@@ -1,0 +1,8 @@
+/mongo_data
+/__pycache__
+/node_modules
+/.idea
+/.vagrant
+/.vscode
+
+
