@@ -1,27 +1,27 @@
-version: '2'
+version: '3.8'
 
 services:
-  # app
-  kv_store:
+
+  redis:
+    image: redis:7.2.1-alpine
+    container_name: "redis"
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes: 
+      - cache:/data
+
+  app:
     build: .
-    # command: uvicorn main:app --host 0.0.0.0 --port 5000 --reload
-    command: python app.py
+    command: ["python3", "app.py"]
     volumes:
-      - ./:/kv-store
+      - "./:/code"
     ports:
       - "5000:5000"
     depends_on:
-        - mongo
+        - redis
 
-  # MongoDB as a service
-  mongo:
-    image: mongo
-    container_name: cont_mongo
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: "root"
-      MONGO_INITDB_ROOT_PASSWORD: "secretPassword"
-    volumes:
-        - ./mongo_data:/data/db
-    ports:
-      - "27017:27017"
+volumes:
+  cache:
+    driver: local
+

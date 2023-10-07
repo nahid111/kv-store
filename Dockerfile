@@ -1,12 +1,12 @@
-FROM python:3.8
-ENV PYTHONUNBUFFERED 1
-ENV PYTHONDONTWRITEBYTECODE=1
+FROM python:3.11.5-alpine
 
-ADD . /kv-store
-WORKDIR /kv-store
+ENV INSTALL_PATH /code
+RUN mkdir -p $INSTALL_PATH
+WORKDIR $INSTALL_PATH
 
-RUN pip install -r requirements.txt
+COPY ./requirements.txt $INSTALL_PATH
+RUN pip install --no-cache-dir --requirement $INSTALL_PATH/requirements.txt
 
-#CMD [ "python3", "./app.py" ]
+COPY . $INSTALL_PATH
 
-
+CMD ["python3", "app.py"]

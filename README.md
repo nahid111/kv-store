@@ -1,35 +1,33 @@
 ## REST key-val store
-#### Built with [fastapi](https://fastapi.tiangolo.com/ "fastapi") + MongoDB
+#### Built with [fastapi](https://fastapi.tiangolo.com/ "fastapi") + Redis
 An API with the following endpoints to create a key-value store. The purpose of the API is to store any arbitrary length value in a persistent store with respect to a key and later fetch these values by keys. These values will have a TTL (for example 5 minutes) and after the TTL is over, the values will be removed from the store.
 
 ## Run the application
 ```bash
-sudo docker-compose up
+docker compose up
 ```
 
 
 ## Endpoints
 
 ### ```GET /values```
-Get all the values of the store.
-
+Get all the values of the store. <br/>
 response: ```{key1: value1, key2: value2, key3: value3...}```
 
 ### ```GET /values?keys=key1,key2```
-Get one or more specific values from the store and also reset the TTL of those keys.
-
+Get one or more specific values from the store and also reset the TTL of those keys. <br/>
 response: ```{key1: value1, key2: value2}```
 
 ### ```POST /values```
 Save a value in the store.
 
-request: ```{key1: value1, key2: value2..}```
+request: ```{key1: value1, key2: value2..}``` <br/>
 response: whatever’s appropriate
 
 ### ```PATCH /values```
 Update a value in the store and also reset the TTL.
 
-request: ```{key1: value1, key2: value2..}```
+request: ```{key1: value1, key2: value2..}``` <br/>
 response: whatever’s appropriate
 
 ## Constraints
